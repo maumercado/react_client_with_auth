@@ -6,7 +6,6 @@ class App extends Component {
         return (
             <div>
                 <Header />
-                <h3>React app starter</h3>
             </div>
         );
     }
