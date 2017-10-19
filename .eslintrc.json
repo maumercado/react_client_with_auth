@@ -1,0 +1,45 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true
+        },
+        "ecmaVersion": 7,
+        "sourceType": "module"
+    },
+    "extends": ["plugin:react/recommended"],
+    "rules": {
+        "react/prop-types": ["off"],
+        "react/jsx-no-bind": [
+            "error",
+            {
+                "ignoreRefs": false,
+                "allowArrowFunctions": true,
+                "allowBind": false
+            }
+        ],
+        "max-len": ["error", 80, 4],
+        "no-trailing-spaces": "error",
+        "no-debugger": "warn",
+        "no-const-assign": "warn",
+        "no-this-before-super": "warn",
+        "no-unreachable": "warn",
+        "no-unused-vars": "warn",
+        "constructor-super": "warn",
+        "valid-typeof": "warn",
+        "brace-style": [
+            "error",
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ]
+    }
+}
