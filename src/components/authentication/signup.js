@@ -6,7 +6,9 @@ import * as actions from '../../actions';
 
 class Signup extends Component {
     handleFormSubmit = formProps => {
-        this.props.signupUser(formProps);
+        this.props.signupUser(formProps, () => {
+            this.props.history.push('/feature');
+        });
     };
 
     generateFields = () => {

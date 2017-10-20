@@ -34,7 +34,7 @@ export const signinUser = ({ email, password }, cb) => {
     };
 };
 
-export const signupUser = ({ email, password }) => {
+export const signupUser = ({ email, password }, cb) => {
     return async dispatch => {
         try {
             const response = await axios.post(`${API_URL}/signup`, {
@@ -43,7 +43,7 @@ export const signupUser = ({ email, password }) => {
             });
             localStorage.setItem('token', response.data.token);
             dispatch({ type: AUTH_USER });
-            // cb();
+            cb();
         } catch (error) {
             console.log(error);
             dispatch(authError('Bad registration info'));
