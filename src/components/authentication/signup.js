@@ -1,60 +1,47 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
+// import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+
+import CustomReduxForm from '../common';
 import * as actions from '../../actions';
 
 class Signup extends Component {
-    renderField = field => {
-        const { meta: { touched, error } } = field;
-        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
-
-        return (
-            <fieldset className={className}>
-                <label>{field.label}</label>
-                <input
-                    {...field.input}
-                    type={field.type}
-                    className={field.className}
-                />
-                <div className="text-help">{touched ? error : ''}</div>
-            </fieldset>
-        );
+    handleFormSubmit = ({ email, password, passwordConfirm }) => {
+        console.log(email, password, passwordConfirm);
     };
 
-    handleFormSubmit = ({ email, password, passwordConfirmation }) => {
-        console.log(email, password, passwordConfirmation);
+    generateFields = () => {
+        return [
+            {
+                name: 'email',
+                label: 'Email',
+                type: 'text',
+                className: 'form-control'
+            },
+            {
+                name: 'password',
+                label: 'Password',
+                type: 'password',
+                className: 'form-control'
+            },
+            {
+                name: 'passwordConfirm',
+                label: 'Password Confirmation',
+                type: 'password',
+                className: 'form-control'
+            }
+        ];
     };
 
     render() {
-        const { handleSubmit } = this.props;
-
         return (
-            <form onSubmit={handleSubmit(this.handleFormSubmit)}>
-                <Field
-                    label="Email"
-                    name="email"
-                    component={this.renderField}
-                    type="text"
-                    className="form-control"
-                />
-                <Field
-                    label="Password"
-                    name="password"
-                    component={this.renderField}
-                    type="password"
-                    className="form-control"
-                />
-                <Field
-                    label="Password Confirmation"
-                    name="passwordConfirm"
-                    component={this.renderField}
-                    type="password"
-                    className="form-control"
-                />
-                <button action="submit" className="btn btn-primary">
-                    Sign up!
-                </button>
-            </form>
+            <CustomReduxForm
+                formName="signup"
+                fields={this.generateFields()}
+                onSubmit={this.handleFormSubmit}
+                validate={validate}
+                submitButtonText="Sign Up!"
+            />
         );
     }
 }
@@ -89,8 +76,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default reduxForm({
-    validate,
-    form: 'signup',
-    fields: ['email', 'password', 'passwordConfirm']
-})(connect(mapStateToProps)(Signup));
+export default connect(mapStateToProps)(Signup);

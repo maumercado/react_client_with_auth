@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+
+import CustomReduxForm from '../common';
 import { signinUser } from '../../actions';
 
 class Signin extends Component {
@@ -14,21 +15,21 @@ class Signin extends Component {
         }
     };
 
-    renderField = field => {
-        const { meta: { touched, error } } = field;
-        const className = `form-group ${touched && error ? 'has-danger' : ''}`;
-
-        return (
-            <fieldset className={className}>
-                <label>{field.label}</label>
-                <input
-                    {...field.input}
-                    type={field.type}
-                    className={field.className}
-                />
-                <div className="text-help">{touched ? error : ''}</div>
-            </fieldset>
-        );
+    generateFields = () => {
+        return [
+            {
+                name: 'email',
+                label: 'Email',
+                type: 'text',
+                className: 'form-control'
+            },
+            {
+                name: 'password',
+                label: 'Password',
+                type: 'password',
+                className: 'form-control'
+            }
+        ];
     };
 
     handleFormSubmit = ({ email, password }) => {
@@ -38,29 +39,14 @@ class Signin extends Component {
     };
 
     render() {
-        const { handleSubmit } = this.props;
-
         return (
-            <form onSubmit={handleSubmit(this.handleFormSubmit)}>
-                <Field
-                    label="Email"
-                    name="email"
-                    component={this.renderField}
-                    type="text"
-                    className="form-control"
-                />
-                <Field
-                    label="Password"
-                    name="password"
-                    component={this.renderField}
-                    type="password"
-                    className="form-control"
-                />
-                {this.renderAlert()}
-                <button action="submit" className="btn btn-primary">
-                    Sign In
-                </button>
-            </form>
+            <CustomReduxForm
+                formName="signin"
+                fields={this.generateFields()}
+                onSubmit={this.handleFormSubmit}
+                validate={validate}
+                submitButtonText="Sign In"
+            />
         );
     }
 }
@@ -84,8 +70,4 @@ const mapStateToProps = state => {
     return { errorMessage: state.auth.error };
 };
 
-export default reduxForm({
-    validate,
-    form: 'signin',
-    fields: ['email', 'password']
-})(connect(mapStateToProps, { signinUser })(Signin));
+export default connect(mapStateToProps, { signinUser })(Signin);
