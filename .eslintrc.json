@@ -25,6 +25,7 @@
                 "allowBind": false
             }
         ],
+        "no-dupe-keys": "error",
         "max-len": ["error", 80, 4],
         "no-trailing-spaces": "error",
         "no-debugger": "warn",
