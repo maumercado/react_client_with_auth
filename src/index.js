@@ -13,13 +13,22 @@ import Signin from './components/authentication/signin';
 import Signout from './components/authentication/signout';
 import Signup from './components/authentication/signup';
 import reducers from './reducers';
-
+import { AUTH_USER } from './actions/types';
 import registerServiceWorker from './registerServiceWorker';
 
 const createStoreWithMiddleware = applyMiddleware(Thunk)(createStore);
+const store = createStoreWithMiddleware(reducers);
+
+const token = localStorage.getItem('token');
+
+if (token) {
+    store.dispatch({
+        type: AUTH_USER
+    });
+}
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
+    <Provider store={store}>
         <BrowserRouter>
             <div>
                 <Header />
