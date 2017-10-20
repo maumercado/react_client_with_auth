@@ -17,7 +17,7 @@ export default (state = {}, action) => {
             return { ...state, error: action.payload };
         }
         case RESET_AUTH_ERROR: {
-            return { ...state, error: action.payload, error: '' };
+            return { ...state, error: '' };
         }
         default: {
             return state;
