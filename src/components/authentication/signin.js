@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import CustomReduxForm from '../common';
-import { signinUser } from '../../actions';
+import * as actions from '../../actions';
+import CustomReduxForm from '../common/CustomForm';
 
 class Signin extends Component {
-    renderAlert = () => {
-        if (this.props.errorMessage) {
-            return (
-                <div className="alert alert-danger">
-                    <strong>Oops!</strong> {this.props.errorMessage}
-                </div>
-            );
-        }
-    };
-
     generateFields = () => {
         return [
             {
@@ -40,13 +30,15 @@ class Signin extends Component {
 
     render() {
         return (
-            <CustomReduxForm
-                formName="signin"
-                fields={this.generateFields()}
-                onSubmit={this.handleFormSubmit}
-                validate={validate}
-                submitButtonText="Sign In"
-            />
+            <div>
+                <CustomReduxForm
+                    formName="signin"
+                    validate={validate}
+                    fields={this.generateFields()}
+                    onSubmit={this.handleFormSubmit}
+                    submitButtonText="Sign In"
+                />
+            </div>
         );
     }
 }
@@ -66,8 +58,4 @@ const validate = values => {
     return errors;
 };
 
-const mapStateToProps = state => {
-    return { errorMessage: state.auth.error };
-};
-
-export default connect(mapStateToProps, { signinUser })(Signin);
+export default connect(null, actions)(Signin);

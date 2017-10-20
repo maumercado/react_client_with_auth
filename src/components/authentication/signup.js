@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-// import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 
-import CustomReduxForm from '../common';
+import CustomReduxForm from '../common/CustomForm';
 import * as actions from '../../actions';
 
 class Signup extends Component {
-    handleFormSubmit = ({ email, password, passwordConfirm }) => {
-        console.log(email, password, passwordConfirm);
+    handleFormSubmit = formProps => {
+        this.props.signupUser(formProps);
     };
 
     generateFields = () => {
@@ -35,13 +34,15 @@ class Signup extends Component {
 
     render() {
         return (
-            <CustomReduxForm
-                formName="signup"
-                fields={this.generateFields()}
-                onSubmit={this.handleFormSubmit}
-                validate={validate}
-                submitButtonText="Sign Up!"
-            />
+            <div>
+                <CustomReduxForm
+                    formName="signup"
+                    fields={this.generateFields()}
+                    onSubmit={this.handleFormSubmit}
+                    validate={validate}
+                    submitButtonText="Sign Up!"
+                />
+            </div>
         );
     }
 }
@@ -70,10 +71,4 @@ const validate = values => {
     return errors;
 };
 
-const mapStateToProps = state => {
-    return {
-        errorMessage: state.auth.error
-    };
-};
-
-export default connect(mapStateToProps)(Signup);
+export default connect(null, actions)(Signup);

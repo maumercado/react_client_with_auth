@@ -1,15 +1,31 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+
+import * as actions from '../../actions';
 
 const CustomReduxForm = props => {
     class CustomForm extends React.Component {
+        componentWillMount() {
+            this.props.removeAuthError();
+        }
+        renderAlert = () => {
+            if (this.props.errorMessage) {
+                return (
+                    <div className="alert alert-danger">
+                        <strong>Oops!</strong> {this.props.errorMessage}
+                    </div>
+                );
+            }
+        };
         render() {
-            const { fields, handleSubmit, submitButtonText } = this.props;
+            const { fields, handleSubmit } = this.props;
             return (
                 <form onSubmit={handleSubmit(props.onSubmit)}>
                     {fields.map((formField, i) => renderField(formField, i))}
+                    {this.renderAlert()}
                     <button className="btn btn-primary" action="submit">
-                        {submitButtonText}
+                        {props.submitButtonText}
                     </button>
                 </form>
             );
@@ -47,10 +63,16 @@ const CustomReduxForm = props => {
         );
     };
 
+    const mapStateToProps = state => {
+        return {
+            errorMessage: state.auth.error
+        };
+    };
+
     const WrappedForm = reduxForm({
         validate: props.validate,
         form: props.formName
-    })(CustomForm);
+    })(connect(mapStateToProps, actions)(CustomForm));
 
     return <WrappedForm {...props} />;
 };
