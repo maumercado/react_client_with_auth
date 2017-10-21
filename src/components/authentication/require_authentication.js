@@ -25,7 +25,6 @@ export default ComposedComponent => {
         }
 
         render() {
-            console.log(this.props.authenticated);
             return <ComposedComponent {...this.props} />;
         }
     }

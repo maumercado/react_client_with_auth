@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, RESET_AUTH_ERROR } from './types';
+import {
+    AUTH_USER,
+    AUTH_ERROR,
+    UNAUTH_USER,
+    RESET_AUTH_ERROR,
+    FETCH_MESSAGE
+} from './types';
 
 const API_URL = 'http://localhost:3090';
 
@@ -57,5 +63,23 @@ export const signoutUser = () => {
         dispatch({
             type: UNAUTH_USER
         });
+    };
+};
+
+export const fetchMessage = () => {
+    return async dispatch => {
+        try {
+            const response = await axios.get(API_URL, {
+                headers: { authorization: localStorage.getItem('token') }
+            });
+            dispatch({
+                type: FETCH_MESSAGE,
+                payload: response.data.message
+            });
+        } catch (error) {
+            dispatch({
+                type: UNAUTH_USER
+            });
+        }
     };
 };
