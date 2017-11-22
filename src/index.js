@@ -1,25 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Thunk from 'redux-thunk';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Thunk from "redux-thunk";
 
-import Header from './components/header';
-import App from './components/app';
-import Feature from './components/feature';
-import RequireAuth from './components/authentication/require_authentication';
-import Signin from './components/authentication/signin';
-import Signout from './components/authentication/signout';
-import Signup from './components/authentication/signup';
-import reducers from './reducers';
-import { AUTH_USER } from './actions/types';
-import registerServiceWorker from './registerServiceWorker';
+import Header from "./components/header";
+import App from "./components/app";
+import Feature from "./components/feature";
+import RequireAuth from "./components/authentication/require_authentication";
+import Signin from "./components/authentication/signin";
+import Signout from "./components/authentication/signout";
+import Signup from "./components/authentication/signup";
+import reducers from "./reducers";
+import { AUTH_USER } from "./actions/types";
+import registerServiceWorker from "./registerServiceWorker";
 
 const createStoreWithMiddleware = applyMiddleware(Thunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem("token");
 
 if (token) {
     store.dispatch({
@@ -42,7 +42,7 @@ ReactDOM.render(
             </div>
         </BrowserRouter>
     </Provider>,
-    document.querySelector('.container')
+    document.querySelector(".container")
 );
 
 registerServiceWorker();
